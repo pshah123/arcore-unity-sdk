@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="RequiredOptionalPreprocessBuild.cs" company="Google">
 //
 // Copyright 2018 Google Inc. All Rights Reserved.
@@ -24,6 +24,7 @@ namespace GoogleARCoreInternal
     using System.IO;
     using UnityEditor;
     using UnityEditor.Build;
+    using UnityEditor.Build.Reporting;
     using UnityEngine;
 
     internal class RequiredOptionalPreprocessBuild : IPreprocessBuild
@@ -37,6 +38,12 @@ namespace GoogleARCoreInternal
                 return 0;
             }
         }
+
+#if UNITY_2018_1_OR_NEWER
+        public void OnPreprocessBuild(BuildReport report) {
+            OnPreprocessBuild(report.summary.platform, report.summary.outputPath);    
+        }
+#endif
 
         public void OnPreprocessBuild(BuildTarget target, string path)
         {
