@@ -24,6 +24,7 @@ namespace GoogleARCore.Examples.Common
     using System.Diagnostics.CodeAnalysis;
     using UnityEditor;
     using UnityEditor.Build;
+    using UnityEditor.Build.Reporting;
     using UnityEngine;
 
     internal class ExamplePreprocessBuild : IPreprocessBuild
@@ -69,6 +70,12 @@ namespace GoogleARCore.Examples.Common
                 return 0;
             }
         }
+
+#if UNITY_2018_1_OR_NEWER
+        public void OnPreprocessBuild(BuildReport report) {
+            OnPreprocessBuild(report.summary.platform, report.summary.outputPath);
+        }
+#endif
 
         public void OnPreprocessBuild(BuildTarget target, string path)
         {
